@@ -1,0 +1,306 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Тест по информационной безопасности</title>
+    <style>
+      body {
+        margin: 0;
+        font-family: "Segoe UI", sans-serif;
+        background: linear-gradient(135deg, #141e30, #243b55);
+        color: #fff;
+      }
+      .container {
+        max-width: 700px;
+        margin: 60px auto;
+        padding: 30px;
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(10px);
+        border-radius: 20px;
+        text-align: center;
+      }
+      h1 {
+        margin-bottom: 20px;
+      }
+      .progress {
+        height: 10px;
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 10px;
+        margin-bottom: 20px;
+      }
+      .progress-bar {
+        height: 100%;
+        width: 0%;
+        background: #00c6ff;
+        border-radius: 10px;
+        transition: 0.3s;
+      }
+      .question {
+        margin-bottom: 20px;
+        padding: 20px;
+        border-radius: 15px;
+        background: rgba(0, 0, 0, 0.4);
+      }
+      .answers label {
+        display: block;
+        padding: 10px;
+        margin: 8px 0;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: 0.2s;
+      }
+      .answers label:hover {
+        background: rgba(255, 255, 255, 0.1);
+      }
+      button {
+        padding: 12px 25px;
+        border: none;
+        border-radius: 10px;
+        background: linear-gradient(45deg, #00c6ff, #0072ff);
+        color: white;
+        font-size: 16px;
+        cursor: pointer;
+        margin-top: 15px;
+      }
+      .result {
+        font-size: 24px;
+        margin-top: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Тест по информационной безопасности</h1>
+      <div class="progress">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+      <div id="quiz"></div>
+      <button id="nextBtn" onclick="nextQuestion()">Далее</button>
+      <div class="result" id="result"></div>
+    </div>
+    <script>
+      const questions = [
+        {
+          q: `Что такое информационная безопасность?`,
+          a: [
+            `а) Защита компьютеров от поломок`,
+            `б) Состояние защищённости информации и систем`,
+            `в) Только защита паролей`,
+            `г) Работа антивируса`,
+          ],
+          c: 1,
+        },
+        {
+          q: `Основные свойства информационной безопасности:`,
+          a: [
+            `а) Скорость, мощность, дизайн`,
+            `б) Конфиденциальность, целостность, доступность`,
+            `в) Только конфиденциальность`,
+            `г) Только защита сети`,
+          ],
+          c: 1,
+        },
+        {
+          q: `Конфиденциальность — это:`,
+          a: [
+            `а) Доступность информации всем`,
+            `б) Секретность информации`,
+            `в) Скорость передачи данных`,
+            `г) Архивирование данных`,
+          ],
+          c: 1,
+        },
+        {
+          q: `Целостность информации означает:`,
+          a: [
+            `а) Удаление данных`,
+            `б) Защиту от изменений и искажений`,
+            `в) Быстрый доступ`,
+            `г) Шифрование`,
+          ],
+          c: 1,
+        },
+        {
+          q: `Доступность — это:`,
+          a: [
+            `а) Возможность изменения данных`,
+            `б) Доступ к информации в нужное время`,
+            `в) Хранение данных`,
+            `г) Резервное копирование`,
+          ],
+          c: 1,
+        },
+        {
+          q: `Что такое КСЗИ (комплексная система защиты информации)?`,
+          a: [
+            `а) Только антивирус`,
+            `б) Набор программ`,
+            `в) Совокупность мер, средств и процессов защиты информации`,
+            `г) Интернет-сеть`,
+          ],
+          c: 2,
+        },
+        {
+          q: `Основная цель КСЗИ:`,
+          a: [
+            `а) Увеличение скорости работы`,
+            `б) Обеспечение безопасности информации`,
+            `в) Снижение затрат`,
+            `г) Обновление ПО`,
+          ],
+          c: 1,
+        },
+        {
+          q: `Какие меры входят в КСЗИ?`,
+          a: [
+            `а) Только технические`,
+            `б) Только организационные`,
+            `в) Организационные, технические и правовые`,
+            `г) Только физические`,
+          ],
+          c: 2,
+        },
+        {
+          q: `К организационным мерам относится:`,
+          a: [
+            `а) Установка антивируса`,
+            `б) Инструктаж сотрудников`,
+            `в) Шифрование данных`,
+            `г) Настройка сети`,
+          ],
+          c: 1,
+        },
+        {
+          q: `К техническим мерам относится:`,
+          a: [
+            `а) Приказы руководства`,
+            `б) Политика безопасности`,
+            `в) Межсетевой экран (Firewall)`,
+            `г) Законы`,
+          ],
+          c: 2,
+        },
+        {
+          q: `К правовым мерам относится:`,
+          a: [
+            `а) Установка ПО`,
+            `б) Использование серверов`,
+            `в) Законы и нормативные акты`,
+            `г) Резервное копирование`,
+          ],
+          c: 2,
+        },
+        {
+          q: `Основной закон РБ в сфере ИБ:`,
+          a: [
+            `а) Закон «О труде»`,
+            `б) Закон «Об информации, информатизации и защите информации»`,
+            `в) Закон «О налогах»`,
+            `г) Конституция`,
+          ],
+          c: 1,
+        },
+        {
+          q: `Что регулирует закон РБ об информации?`,
+          a: [
+            `а) Только интернет`,
+            `б) Отношения в сфере информации и её защиты`,
+            `в) Только базы данных`,
+            `г) Только компьютеры`,
+          ],
+          c: 1,
+        },
+        {
+          q: `Что такое защита информации?`,
+          a: [
+            `а) Удаление данных`,
+            `б) Совокупность мер по предотвращению угроз`,
+            `в) Передача данных`,
+            `г) Сжатие файлов`,
+          ],
+          c: 1,
+        },
+        {
+          q: `Угроза информационной безопасности — это:`,
+          a: [
+            `а) Пользователь`,
+            `б) Потенциальная опасность для информации`,
+            `в) Программа`,
+            `г) Компьютер`,
+          ],
+          c: 1,
+        },
+        {
+          q: `Основная задача КСЗИ:`,
+          a: [
+            `а) Ускорение интернета`,
+            `б) Предотвращение утечек и атак`,
+            `в) Установка программ`,
+            `г) Обновление системы`,
+          ],
+          c: 1,
+        },
+        {
+          q: `Кто отвечает за ИБ в организации?`,
+          a: [
+            `а) Только директор`,
+            `б) Только программист`,
+            `в) Все сотрудники и руководство`,
+            `г) Только администратор`,
+          ],
+          c: 2,
+        },
+        {
+          q: `Что относится к правовым нормам РБ в ИБ?`,
+          a: [
+            `а) Антивирусы`,
+            `б) Законы, указы и нормативные акты`,
+            `в) Программы`,
+            `г) Серверы`,
+          ],
+          c: 1,
+        },
+      ];
+
+      let current = 0,
+        score = 0;
+
+      function showQuestion() {
+        const q = questions[current];
+        document.getElementById("quiz").innerHTML = `
+ <div class="question">
+ <h3>${current + 1}. ${q.q}</h3>
+ <div class="answers">
+ ${q.a.map((ans, i) => `<label><input type="radio" name="ans" value="${i}"> ${ans}</label>`).join("")}
+ </div>
+ </div>`;
+        updateProgress();
+      }
+
+      function nextQuestion() {
+        const selected = document.querySelector("input[name=ans]:checked");
+        if (!selected) {
+          alert("Выбери ответ");
+          return;
+        }
+        if (Number(selected.value) === questions[current].c) score++;
+        current++;
+        if (current < questions.length) {
+          showQuestion();
+        } else {
+          document.getElementById("quiz").innerHTML = "";
+          document.getElementById("nextBtn").style.display = "none";
+          document.getElementById("result").innerText =
+            `Ваш результат: ${score} из ${questions.length}`;
+        }
+      }
+
+      function updateProgress() {
+        document.getElementById("progressBar").style.width =
+          (current / questions.length) * 100 + "%";
+      }
+
+      showQuestion();
+    </script>
+  </body>
+</html>
